@@ -3,19 +3,24 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
-const birthdayRoutes = require("./routes/birthdayRoutes");
-
 const app = express();
 
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB Connected"))
-  .catch((err) => console.log(err));
-
+// Routes
+const birthdayRoutes = require("./routes/birthdayRoutes");
 app.use("/api/birthdays", birthdayRoutes);
 
-const PORT = 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// MongoDB Connect
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB Connected"))
+  .catch(err => console.log(err));
+
+// Render requires dynamic PORT
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
