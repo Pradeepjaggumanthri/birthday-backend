@@ -1,0 +1,13 @@
+const mongoose = require("mongoose");
+
+const birthdaySchema = new mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    day: { type: Number, required: true },
+    month: { type: Number, required: true },
+    year: { type: Number, required: true },
+  },
+  { timestamps: true }
+);
+
+module.exports = mongoose.model("Birthday", birthdaySchema);
